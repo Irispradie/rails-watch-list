@@ -1,0 +1,27 @@
+<h1><%= @list.name %></h1>
+
+<div class="row g-4 mb-5">
+    <% @movies.each do |movie| %>
+      <div class="col-sm-6 col-md-4 col-lg-3">
+        <div class="card h-100 shadow-sm border-0">
+          <%= image_tag movie.poster_url, class: "card-img-top", alt: "Affiche de #{movie.title}" %>
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title"><%= movie.title %></h5>
+            <p class="card-text text-muted small mb-3"><%= truncate(movie.overview, length: 100) %></p>
+            <div class="mt-auto d-flex justify-content-between align-items-center">
+              <span class="badge bg-primary"><%= movie.rating %> :étoile:</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+
+<%= simple_form_for [@list, @bookmark] do |f| %>
+  <%= f.input :comment %>
+  <%= f.input :movie_id, collection: Movie.all %>
+  <%= f.submit %>
+<% end %>
+
+<%= link_to "Previous", lists_path %>
